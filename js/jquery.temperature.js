@@ -14,7 +14,6 @@
         city + '&units=metric&id=524901&APPID=34b222875f6018c8fdd6442a6aac5056',
         dataType: 'json',
         error: function(jqXHR, exception) {
-          console.log($('.citiesList'));
           $('.error').remove();
           $('<p class="error">').appendTo('.citiesList');
           $('.error').html('Error: ' + jqXHR.status + '. ' + jqXHR.responseJSON.message);
