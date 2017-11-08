@@ -1,7 +1,7 @@
 // $(function () {
-//   $('ul').temperature({'defaultCities' : ['Boston']});
+//   $('ul').temperature({'searchedCities' : ['Boston'], 'move': 'down'});
 // })
 
 $(function () {
-  $('ul').temperature({'move': 'down'});
+  $('ul').temperature();
 })

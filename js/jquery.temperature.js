@@ -2,7 +2,7 @@
   $.fn.temperature = function(options) {
     // Default settings
     var settings = $.extend({
-      'defaultCities' : ['Saint Petersburg', 'Moscow', 'Paris', 'London', 'Berlin',
+      'searchedCities' : ['Saint Petersburg', 'Moscow', 'Paris', 'London', 'Berlin',
       'Barcelona', 'New York', 'Ottawa', 'Canberra', 'Wellington', 'Norilsk'],
       'move': 'up'
     }, options);
@@ -13,20 +13,23 @@
       var ajaxCall = $.ajax({url: 'http://api.openweathermap.org/data/2.5/weather?q=' +
         city + '&units=metric&id=524901&APPID=34b222875f6018c8fdd6442a6aac5056',
         dataType: 'json',
-        error: function() {
-          console.log('Error with Ajax!');
+        error: function(jqXHR, exception) {
+          console.log($('.citiesList'));
+          $('.error').remove();
+          $('<p class="error">').appendTo('.citiesList');
+          $('.error').html('Error: ' + jqXHR.status + '. ' + jqXHR.responseJSON.message);
         }
       });// END OF $.ajax
 
       ajaxCall.done(function(data) {
         var temp = ' ' + Math.round(data.main.temp) +
-        '&#176; in ' + data.name + ', by the way.';
+        '&deg; in ' + data.name + ', by the way.';
         $('#' + id).html(temp);
       });
     }// END OF getWeather()
 
     // Appending temperature to li containing city
-    var mentionedCities = settings.defaultCities;
+    var mentionedCities = settings.searchedCities;
     mentionedCities.forEach(function(city, i){
       var stringToAppend = '<span class="degree" id=' + i + '></span>';
       var liWithCity = '> li:contains(' + city + ')';
